@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:template/views/settings_view.dart';
 import 'package:template/theme/theme.dart';
 
@@ -9,6 +11,7 @@ import 'package:template/theme/theme.dart';
 /// Stirng difficulty defaullt medium.
 /// int timePerQuestion defaullt 20.
 class Settings {
+  bool activateAi = false;
   int _numberOfQuestions = 25;
   late List<String> _selectedCategories = Themes.categories.listCategories
       .map((category) => category.name)
@@ -33,6 +36,10 @@ class Settings {
 
   set standardSettings(bool value) {
     _standardSettings = value;
+  }
+
+  void setActiveAi() {
+    activateAi = !activateAi;
   }
 
   void setDifficulty(String newDifficulty) {
