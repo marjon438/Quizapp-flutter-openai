@@ -5,7 +5,7 @@
 En Quiz app som använder sig av ett öppet api med flersvarsfrågor. 
 Stort tack till [The Trivia API](https://the-trivia-api.com/) och Will Fry som skapat det. 
 Vi använder en databas från [Deta](https://deta.sh) för att lagra data till highscore. 
-Så man kan skryta med sitt resultat
+Så man kan skryta med sitt resultat.
 
 ## Innan användning!!
 För att highscore skall fungera behövs en nyckel till databasen.
