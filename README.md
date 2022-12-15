@@ -14,6 +14,8 @@ För att highscore skall fungera behövs en nyckel till databasen.
 - Döp om till lib/auth<top_secret.dart>. 
 - Använd demonyckel som databasKey för att testa spelet med Highscore.
 
+- 2022-12-15 Uppdatering. För att använda ai genererade frågor krävs en api-nyckel ifrån OpenAi. https://openai.com/api/
+
 ## Vi som gjort detta projekt är:
  - August Aublet
  - Gustaf Hasselgren
