@@ -13,95 +13,140 @@ class SettingsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScaffoldWithBackground(
-      child: (Center(
-          child: Consumer<GameSession>(
-        builder: (BuildContext context, gameSession, child) => Column(
-          children: [
-            Row(
-              children: [
-                SizedBox(width: 20, child: BackToFirstViewButton()),
-                Expanded(
-                  child: Text(
-                    'Singleplayer',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Themes.colors.white, fontSize: 35),
+      child: Consumer<GameSession>(
+          builder: (BuildContext context, gameSession, child) =>
+              Stack(children: [
+                Center(
+                    child: Opacity(
+                  opacity: getOpacityAiIcon(context),
+                  child: Icon(Icons.psychology_outlined,
+                      size: 300, color: Themes.colors.white),
+                )),
+                (Center(
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          SizedBox(width: 20, child: BackToFirstViewButton()),
+                          Expanded(
+                            child: Text(
+                              'Singleplayer',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Themes.colors.white, fontSize: 35),
+                            ),
+                          ),
+                          SizedBox(width: 20)
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 40,
+                      ),
+                      CategoryRow(),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Align(
+                        alignment: Alignment.bottomLeft,
+                        child: Text(
+                          'Number of questions',
+                          style: TextStyle(
+                              color: Themes.colors.white, fontSize: 15),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      SliderModel(
+                          onchanged: gameSession.updateNumberOfQuestion,
+                          getValue: gameSession.getNumberOfQuestion,
+                          displayInCircle:
+                              getNumberOfQuestionSlider(gameSession),
+                          max: 50),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Align(
+                        alignment: Alignment.bottomLeft,
+                        child: Text(
+                          'Time per question',
+                          style: TextStyle(
+                              color: Themes.colors.white, fontSize: 15),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      SliderModel(
+                          onchanged: gameSession.updateTimePerQuestion,
+                          getValue: gameSession.getTimePerQuestion,
+                          displayInCircle:
+                              getTimePerQuestionSlider(gameSession),
+                          max: 61),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      DifficultyRow(),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      HighscoreRulesRow(),
+                      Spacer(),
+                      CustomButton(
+                        text: Text(
+                          "Start",
+                          style: Themes.textStyle.headline1,
+                        ),
+                        onPressed: () {
+                          gameSession.settings.checkSettings();
+                          Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                  pageBuilder: (context, _, __) =>
+                                      LoadingView(),
+                                  transitionDuration: Duration.zero,
+                                  reverseTransitionDuration: Duration.zero));
+                        },
+                        width: 250,
+                        height: 50,
+                        color: Themes.colors.blueDark,
+                      ),
+                      const Spacer(),
+                      Row(
+                        children: [
+                          Icon(Icons.psychology_outlined,
+                              size: 30, color: Themes.colors.white),
+                          Text(
+                            'Activate AI-generated questions',
+                            style: TextStyle(
+                                color: Themes.colors.white, fontSize: 15),
+                          ),
+                          Checkbox(
+                              value: Provider.of<GameSession>(context,
+                                      listen: false)
+                                  .getActivateAi,
+                              activeColor: Themes.colors.white,
+                              onChanged: (bool? active) {
+                                Provider.of<GameSession>(context, listen: false)
+                                    .setActiveAi();
+                              }),
+                        ],
+                      ),
+                    ],
                   ),
-                ),
-                SizedBox(width: 20)
-              ],
-            ),
-            const SizedBox(
-              height: 40,
-            ),
-            CategoryRow(),
-            const SizedBox(
-              height: 20,
-            ),
-            Align(
-              alignment: Alignment.bottomLeft,
-              child: Text(
-                'Number of questions',
-                style: TextStyle(color: Themes.colors.white, fontSize: 15),
-              ),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            SliderModel(
-                onchanged: gameSession.updateNumberOfQuestion,
-                getValue: gameSession.getNumberOfQuestion,
-                displayInCircle: getNumberOfQuestionSlider(gameSession),
-                max: 50),
-            const SizedBox(
-              height: 20,
-            ),
-            Align(
-              alignment: Alignment.bottomLeft,
-              child: Text(
-                'Time per question',
-                style: TextStyle(color: Themes.colors.white, fontSize: 15),
-              ),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            SliderModel(
-                onchanged: gameSession.updateTimePerQuestion,
-                getValue: gameSession.getTimePerQuestion,
-                displayInCircle: getTimePerQuestionSlider(gameSession),
-                max: 61),
-            const SizedBox(
-              height: 20,
-            ),
-            DifficultyRow(),
-            const SizedBox(
-              height: 20,
-            ),
-            HighscoreRulesRow(),
-            Spacer(),
-            CustomButton(
-              text: Text(
-                "Start",
-                style: Themes.textStyle.headline1,
-              ),
-              onPressed: () {
-                gameSession.settings.checkSettings();
-                Navigator.push(
-                    context,
-                    PageRouteBuilder(
-                        pageBuilder: (context, _, __) => LoadingView(),
-                        transitionDuration: Duration.zero,
-                        reverseTransitionDuration: Duration.zero));
-              },
-              width: 250,
-              height: 50,
-              color: Themes.colors.blueDark,
-            ),
-            const Spacer(),
-          ],
-        ),
-      ))),
+                )),
+              ])),
     );
+  }
+
+  double getOpacityAiIcon(context) {
+    bool active =
+        Provider.of<GameSession>(context, listen: false).getActivateAi;
+    if (active == true) {
+      return 0.1;
+    } else {
+      return 0;
+    }
   }
 
   Widget getTimePerQuestionSlider(gameSession) {

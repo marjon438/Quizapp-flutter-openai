@@ -39,7 +39,7 @@ class Question {
         id: json["id"],
         category: json["category"],
         correctAnswer: json["correctAnswer"],
-        // incorrectAnswers: json["incorrectAnswers"],
+        //incorrectAnswers: json["incorrectAnswers"],
         incorrectAnswers: incorrectInFormat,
         question: json["question"],
         difficulty: json["difficulty"],

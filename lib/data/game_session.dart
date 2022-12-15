@@ -24,6 +24,7 @@ class GameSession extends ChangeNotifier {
 
   late List ballsDataList;
 
+  bool get getActivateAi => settings.activateAi;
   List get chosenCategories => settings.categories;
   String get chosenDifficulty => settings.difficulty;
   List<Question> get getGameQuestions => gameQuestions;
@@ -36,7 +37,13 @@ class GameSession extends ChangeNotifier {
   }
 
   Future startGame() async {
-    gameQuestions = await httpConection.getQuestions(settings: settings);
+    if (settings.activateAi == true) {
+      gameQuestions =
+          await httpConection.getOpenAiQuestions(settings: settings);
+    } else {
+      gameQuestions =
+          await httpConection.getTriviaQuestions(settings: settings);
+    }
 
     if (gameQuestions.isEmpty) {
       httpFetchComplete = false;
@@ -122,5 +129,11 @@ class GameSession extends ChangeNotifier {
     } else {
       return "Wrong answer";
     }
+  }
+
+  void setActiveAi() {
+    settings.setActiveAi();
+
+    notifyListeners();
   }
 }

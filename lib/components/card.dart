@@ -107,6 +107,7 @@ class OptionsRow extends StatelessWidget {
           .playerAnswers[question.index];
       String correctAnswer = question.correctAnswer;
       // 1 Om spelarens svar är samma som radens värde
+
       if (playerAnswer == optionText) {
         // 1.1 Om spelarens svar också är det rätta svaret så skall raden bli grön och en grön ikon ritas ut
         if (playerAnswer == correctAnswer) {

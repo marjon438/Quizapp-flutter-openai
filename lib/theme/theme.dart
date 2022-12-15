@@ -142,7 +142,7 @@ class ScaffoldWithBackground extends StatelessWidget {
       Padding(
           padding:
               const EdgeInsets.only(top: 55, left: 35, right: 35, bottom: 30),
-          child: child)
+          child: child),
     ]));
   }
 }
