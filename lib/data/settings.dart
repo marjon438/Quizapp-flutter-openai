@@ -42,6 +42,10 @@ class Settings {
     activateAi = !activateAi;
   }
 
+  void resetActiveAi() {
+    activateAi = false;
+  }
+
   void setDifficulty(String newDifficulty) {
     _difficulty = newDifficulty;
   }
@@ -72,7 +76,8 @@ class Settings {
     Settings newSettings = Settings();
     if ((_numberOfQuestions == newSettings.numberOfQuestions) &
         (_timePerQuestion == newSettings.timePerQuestion) &
-        (_selectedCategories.length == newSettings.categories.length)) {
+        (_selectedCategories.length == newSettings.categories.length) &
+        (activateAi == false)) {
       _standardSettings = true;
     } else {
       _standardSettings = false;

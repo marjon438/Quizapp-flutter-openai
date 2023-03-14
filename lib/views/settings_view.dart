@@ -112,6 +112,28 @@ class SettingsView extends StatelessWidget {
                         color: Themes.colors.blueDark,
                       ),
                       const Spacer(),
+                      gameSession.settings.activateAi
+                          ? Row(
+                              children: [
+                                Text("Add your own category: ",
+                                    style:
+                                        TextStyle(color: Themes.colors.white)),
+                                IconButton(
+                                    onPressed: () {
+                                      showDialog(
+                                          context: context,
+                                          builder: ((BuildContext context) =>
+                                              CreateCustomCategory()));
+                                    },
+                                    icon: Icon(
+                                      Icons.add,
+                                      color: Themes.colors.white,
+                                    )),
+                              ],
+                            )
+                          : const SizedBox(
+                              height: 40,
+                            ),
                       Row(
                         children: [
                           Icon(Icons.psychology_outlined,
@@ -129,7 +151,7 @@ class SettingsView extends StatelessWidget {
                               onChanged: (bool? active) {
                                 Provider.of<GameSession>(context, listen: false)
                                     .setActiveAi();
-                              }),
+                              })
                         ],
                       ),
                     ],
@@ -475,6 +497,68 @@ class InfoAboutCategories extends StatelessWidget {
           Text(themeCategory.name)
         ],
       ),
+    );
+  }
+}
+
+class CustomCategoryButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      child: Opacity(
+        opacity: 1,
+        child: Container(
+          width: 60,
+          height: 60,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              gradient: Themes.functions.applyGradient(Colors.grey)),
+          child: FittedBox(
+            child: Padding(
+              padding: const EdgeInsets.all(4),
+              child: Center(
+                  child: Icon(
+                Icons.settings,
+                color: Colors.black,
+              )),
+            ),
+          ),
+        ),
+      ),
+      onTap: () {},
+    );
+  }
+}
+
+class CreateCustomCategory extends StatelessWidget {
+  TextEditingController nameController = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      backgroundColor: Themes.colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      contentPadding: const EdgeInsets.all(15),
+      actionsPadding: const EdgeInsets.all(15),
+      title: const Text('Create your own category:'),
+      content: TextField(
+        controller: nameController,
+        maxLength: 25,
+      ),
+      actions: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CustomButton(
+                text: Text('Return', style: Themes.textStyle.headline3),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                width: 100,
+                height: 30,
+                color: Themes.colors.blueDark),
+          ],
+        ),
+      ],
     );
   }
 }
