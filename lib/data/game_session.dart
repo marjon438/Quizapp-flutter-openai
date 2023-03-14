@@ -78,6 +78,7 @@ class GameSession extends ChangeNotifier {
     settings.setTimePerQuestion(standardSettings.timePerQuestion);
     settings.resetCategories();
     settings.checkSettings();
+    settings.resetActiveAi();
     notifyListeners();
   }
 
@@ -133,6 +134,7 @@ class GameSession extends ChangeNotifier {
 
   void setActiveAi() {
     settings.setActiveAi();
+    settings.checkSettings;
 
     notifyListeners();
   }
